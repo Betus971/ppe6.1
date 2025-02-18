@@ -1,5 +1,8 @@
 package ppe6.ppe6;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -7,6 +10,7 @@ import javafx.stage.Stage;
 import javafx.fxml.FXML;
 import javafx.event.ActionEvent;
 import javafx.scene.control.*;
+import javafx.stage.StageStyle;
 
 import java.io.File;
 import java.sql.Connection;
@@ -51,6 +55,7 @@ public class LoginController implements Initializable {
 //            InvalidLoginMessageLabel.setText("Identifiant Invalid");
             if (!UsernameTextField.getText().isBlank() || !PasswordTextField.getText().isBlank()) {
                 validLogin();
+
             } else{
                 InvalidLoginMessageLabel.setText("Enter Username/Password");
             }
@@ -71,7 +76,8 @@ public class LoginController implements Initializable {
 
              while (resultSet.next()) {
                  if(resultSet.getInt(1)==1){
-                     InvalidLoginMessageLabel.setText("Bravo !!");
+                     //InvalidLoginMessageLabel.setText("Bravo !!");
+                     CreateAccountForm();
                  } else {
                      InvalidLoginMessageLabel.setText("Invalid Username or Password");
                  }
@@ -85,4 +91,21 @@ public class LoginController implements Initializable {
          }
 
      }
+
+      public void CreateAccountForm() {
+            try {
+                Parent root = FXMLLoader.load(getClass().getResource("register.fxml"));
+                Stage registerStage = new Stage();
+                registerStage.initStyle(StageStyle.UNDECORATED);
+                registerStage.setScene(new Scene(root,520,650));
+                registerStage.show();
+
+
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                e.getCause();
+
+            }
+      }
 }
